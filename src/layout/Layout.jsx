@@ -5,9 +5,14 @@ function Layout() {
     const navigate = useNavigate();
     const [darkMode, setDarkMode] = useState(false);
 
+    // const handleLogout = () => {
+    //     localStorage.removeItem("admin");
+    //     navigate("/login");
+    // };
+
     const handleLogout = () => {
-        localStorage.removeItem("admin");
-        navigate("/login");
+      localStorage.removeItem("token");
+      navigate("/login");
     };
 
     return (

@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
-import Login from "./pages/Login";
+import Login from "./pages/LoginPage";
 import Layout from "./layout/Layout";
 import Dashboard from "./pages/Dashboard";
 import Accounts from "./pages/Accounts";
@@ -7,7 +7,8 @@ import Reports from "./pages/Reports";
 
 function App() {
 
-    const isLoggedIn = localStorage.getItem("admin") === "true";
+    //const isLoggedIn = localStorage.getItem("admin") === "true";
+    const isLoggedIn = !!localStorage.getItem("token");
 
     return (
         <BrowserRouter>
