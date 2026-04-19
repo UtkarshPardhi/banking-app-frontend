@@ -1,5 +1,7 @@
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
+import { LayoutDashboard, Wallet, BarChart3 } from "lucide-react";
+import logo from "@/assets/logo.png";
 
 function Layout() {
   const navigate = useNavigate();
@@ -8,75 +10,98 @@ function Layout() {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    window.location.href = "/login"; // clean reset
+    window.location.href = "/login";
   };
 
   return (
     <div className="flex min-h-screen">
 
       {/* SIDEBAR */}
-      <div className="w-64 bg-[#0f172a] text-white p-5 flex flex-col justify-between">
+      <div className="w-64 bg-gradient-to-b from-[#020617] to-[#0f172a] border-r border-blue-900/30 text-white p-5 flex flex-col justify-between select-none">
 
         <div>
-          <h2 className="text-xl font-semibold mb-8">Admin Panel</h2>
+          {/* LOGO */}
+          <div className="flex items-center justify-center mb-12">
+            <img
+              src={logo}
+              alt="FinGo Logo"
+              className="h-16 object-contain pointer-events-none drop-shadow-[0_0_18px_rgba(34,211,238,0.7)]"
+            />
+          </div>
 
           <div className="space-y-2">
 
             {/* Dashboard */}
             <button
               onClick={() => navigate("/dashboard")}
-              className={`w-full text-left px-4 py-2 rounded-lg transition ${
+              className={`w-full flex items-center gap-3 px-4 py-2 rounded-lg cursor-pointer transition-all duration-200 ${
                 location.pathname === "/dashboard"
-                  ? "bg-white/20"
-                  : "hover:bg-white/10"
+                  ? "bg-blue-500/20 border border-blue-400/30"
+                  : "hover:bg-blue-500/10 text-gray-300"
               }`}
             >
+              <LayoutDashboard size={18} />
               Dashboard
             </button>
 
             {/* Accounts */}
             <button
               onClick={() => navigate("/dashboard/accounts")}
-              className={`w-full text-left px-4 py-2 rounded-lg transition ${
+              className={`w-full flex items-center gap-3 px-4 py-2 rounded-lg cursor-pointer transition-all duration-200 ${
                 location.pathname.startsWith("/dashboard/accounts")
-                  ? "bg-white/20"
-                  : "hover:bg-white/10"
+                  ? "bg-blue-500/20 border border-blue-400/30"
+                  : "hover:bg-blue-500/10 text-gray-300"
               }`}
             >
+              <Wallet size={18} />
               Accounts
             </button>
 
             {/* Reports */}
             <button
               onClick={() => navigate("/dashboard/reports")}
-              className={`w-full text-left px-4 py-2 rounded-lg transition ${
+              className={`w-full flex items-center gap-3 px-4 py-2 rounded-lg cursor-pointer transition-all duration-200 ${
                 location.pathname.startsWith("/dashboard/reports")
-                  ? "bg-white/20"
-                  : "hover:bg-white/10"
+                  ? "bg-blue-500/20 border border-blue-400/30"
+                  : "hover:bg-blue-500/10 text-gray-300"
               }`}
             >
+              <BarChart3 size={18} />
               Reports
             </button>
 
           </div>
         </div>
 
+        {/* FOOTER */}
         <div className="text-sm text-gray-400">
-          © Banking App
+          © 2026 FinGo
         </div>
       </div>
 
       {/* MAIN */}
-      <div className={`flex-1 flex flex-col ${darkMode ? "dark bg-gray-900 text-white" : "bg-gray-100"}`}>
+      <div className={`flex-1 flex flex-col ${
+        darkMode ? "dark bg-gray-900 text-white" : "bg-gray-100"
+      }`}>
 
         {/* TOPBAR */}
         <div className={`flex justify-between items-center px-6 py-4 shadow border-b ${
-          darkMode ? "bg-gray-800 border-gray-700" : "bg-white border-gray-200"
+          darkMode
+            ? "bg-gray-800 border-gray-700"
+            : "bg-gradient-to-r from-white to-gray-100 border-gray-200"
         }`}>
 
-          <h1 className="text-lg font-semibold">
-            Banking Dashboard
-          </h1>
+          <div className="flex items-center gap-2">
+          <img
+              src={logo}
+              alt="FinGo"
+              className={`h-10 object-contain pointer-events-none ${
+                darkMode
+                  ? "brightness-125 contrast-125 drop-shadow-[0_0_16px_rgba(34,211,238,1)]"
+                  : ""
+              }`}
+            />
+          </div>
 
           <div className="flex gap-3">
 

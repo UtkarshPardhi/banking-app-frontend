@@ -1,6 +1,8 @@
 import { data } from "react-router-dom";
+import { BASE_URL } from "@/config";
 
-const BASE_URL = "http://localhost:8080";
+//const BASE_URL = "http://localhost:8080"; // LOcal
+const BASE_URL = `${BASE_URL}/api/accounts`;
 
 export const loginAPI = async (data) => {
     return fetch(BASE_URL + "/api/auth/login", {
