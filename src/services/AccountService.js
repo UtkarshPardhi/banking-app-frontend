@@ -1,65 +1,158 @@
-import axios from "axios";
+// import axios from "axios";
  
+// const BASE_URL = "http://localhost:8080/api/accounts";
+
+// class AccountService {
+
+//     // getAllAccounts() {
+//     //     return axios.get(BASE_URL);
+//     // }
+
+//     // createAccount(account) {
+//     //     return axios.post(BASE_URL, account);
+//     // }
+
+//     // deleteAccount(id) {
+//     //     return axios.delete(`${BASE_URL}/${id}`);
+//     // }
+
+//     // deposit(id, amount) {
+//     //     return axios.put(`${BASE_URL}/${id}/deposit`, { amount });
+//     // }
+
+//     // withdraw(id, amount) {
+//     //     return axios.put(`${BASE_URL}/${id}/withdraw`, { amount })
+//     // }
+
+//     // getTransactions(accountId) {
+//     //     return axios.get(`${BASE_URL}/${accountId}/transactions`);
+//     // }
+    
+//     getAuthHeader() {
+//         const token = localStorage.getItem("token");
+//         return {
+//             headers: {
+//                 Authorization: `Bearer ${token}`,
+//             },
+//         };
+//     }
+
+//     getAllAccounts() {
+//          return axios.get(BASE_URL, this.getAuthHeader());
+//      }
+
+//      createAccount(account) {
+//          return axios.post(BASE_URL, account, this.getAuthHeader());
+//      }
+
+//      deleteAccount(id) {
+//          return axios.delete(`${BASE_URL}/${id}`, this.getAuthHeader);
+//      }
+
+//      deposit(id, amount) {
+//          return axios.put(`${BASE_URL}/${id}/deposit`, { amount }, this.getAuthHeader());
+//      }
+
+//      withdraw(id, amount) {
+//          return axios.put(`${BASE_URL}/${id}/withdraw`, { amount }, this.getAuthHeader());
+//      }
+
+//      getTransactions(accountId) {
+//          return axios.get(`${BASE_URL}/${accountId}/transactions`, this.getAuthHeader());
+//      }
+// }
+
+// export default new AccountService();
+// old Account service code
+
+import axios from "axios";
+
 const BASE_URL = "http://localhost:8080/api/accounts";
+
+axios.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      console.log("Session expired. Logging out...");
+
+      localStorage.removeItem("token");
+      window.location.href = "/login";
+    }
+    return Promise.reject(error);
+  }
+);
+
+const getAuthHeaders = () => {
+  const token = localStorage.getItem("token");
+  return {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+};
 
 class AccountService {
 
-    // getAllAccounts() {
-    //     return axios.get(BASE_URL);
-    // }
+  getAllAccounts() {
+    return axios.get(BASE_URL, getAuthHeaders());
+  }
 
-    // createAccount(account) {
-    //     return axios.post(BASE_URL, account);
-    // }
+  createAccount(account) {
+    return axios.post(BASE_URL, account, getAuthHeaders());
+  }
 
-    // deleteAccount(id) {
-    //     return axios.delete(`${BASE_URL}/${id}`);
-    // }
+  deposit(id, amount) {
+    return axios.put(
+        `${BASE_URL}/${id}/deposit`,
+        { amount: amount },
+         getAuthHeaders()
+        );
+  }
 
-    // deposit(id, amount) {
-    //     return axios.put(`${BASE_URL}/${id}/deposit`, { amount });
-    // }
+  withdraw(id, amount) {
+    return axios.put(
+    `${BASE_URL}/${id}/withdraw`,
+     { amount: amount},
+     getAuthHeaders()
+    );
+  }
 
-    // withdraw(id, amount) {
-    //     return axios.put(`${BASE_URL}/${id}/withdraw`, { amount })
-    // }
+  deleteAccount(id) {
+    return axios.delete(`${BASE_URL}/${id}`, getAuthHeaders());
+  }
 
-    // getTransactions(accountId) {
-    //     return axios.get(`${BASE_URL}/${accountId}/transactions`);
-    // }
-    
-    getAuthHeader() {
-        const token = localStorage.getItem("token");
-        return {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        };
-    }
+  getTransactions(id) {
+    return axios.get(`${BASE_URL}/${id}/transactions`, getAuthHeaders());
+  }
 
-    getAllAccounts() {
-         return axios.get(BASE_URL, this.getAuthHeader());
-     }
+  getPDF(id, filter) {
+  return axios.get(`${BASE_URL}/${id}/transactions/pdf`, {
+    ...getAuthHeaders(),
+    params: { filter },
+    responseType: "blob",
+  });
+}
 
-     createAccount(account) {
-         return axios.post(BASE_URL, account, this.getAuthHeader());
-     }
+getCSV(id, filter) {
+  return axios.get(`${BASE_URL}/${id}/transactions/csv`, {
+    ...getAuthHeaders(),
+    params: { filter },
+    responseType: "blob",
+  });
+}
 
-     deleteAccount(id) {
-         return axios.delete(`${BASE_URL}/${id}`, this.getAuthHeader);
-     }
+getExcel(id, filter) {
+  return axios.get(`${BASE_URL}/${id}/transactions/excel`, {
+    ...getAuthHeaders(),
+    params: { filter },
+    responseType: "blob",
+  });
+}
 
-     deposit(id, amount) {
-         return axios.put(`${BASE_URL}/${id}/deposit`, { amount }, this.getAuthHeader());
-     }
+getStats(id) {
+  return axios.get(`${BASE_URL}/${id}/stats`, getAuthHeaders());
+}
 
-     withdraw(id, amount) {
-         return axios.put(`${BASE_URL}/${id}/withdraw`, { amount }, this.getAuthHeader());
-     }
-
-     getTransactions(accountId) {
-         return axios.get(`${BASE_URL}/${accountId}/transactions`, this.getAuthHeader());
-     }
 }
 
 export default new AccountService();

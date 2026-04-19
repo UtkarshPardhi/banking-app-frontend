@@ -1,106 +1,119 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 
 function Layout() {
-    const navigate = useNavigate();
-    const [darkMode, setDarkMode] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [darkMode, setDarkMode] = useState(false);
 
-    // const handleLogout = () => {
-    //     localStorage.removeItem("admin");
-    //     navigate("/login");
-    // };
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    window.location.href = "/login"; // clean reset
+  };
 
-    const handleLogout = () => {
-      localStorage.removeItem("token");
-      navigate("/login");
-    };
+  return (
+    <div className="flex min-h-screen">
 
-    return (
-        <div className="d-flex" style={{ minHeight: "100vh"}}>
+      {/* SIDEBAR */}
+      <div className="w-64 bg-[#0f172a] text-white p-5 flex flex-col justify-between">
 
-            {/* Sidebar */}
-            <div
-              className="d-flex flex-column p-4"
-              style={{
-                width: "240px",
-                background: "linear-gradient(180deg, #0f172a, #1e293b)",
-                color: "white"
-              }}
+        <div>
+          <h2 className="text-xl font-semibold mb-8">Admin Panel</h2>
+
+          <div className="space-y-2">
+
+            {/* Dashboard */}
+            <button
+              onClick={() => navigate("/dashboard")}
+              className={`w-full text-left px-4 py-2 rounded-lg transition ${
+                location.pathname === "/dashboard"
+                  ? "bg-white/20"
+                  : "hover:bg-white/10"
+              }`}
             >
-                <h4 className="mb-4 fw-bold text-center">Admin Panel</h4>
+              Dashboard
+            </button>
 
-                <button
-                 className="btn btn-outline-light mb-3 text-start"
-                 onClick={() => navigate("/dashboard")}
-                >
-                  Dashboard
-                </button>
+            {/* Accounts */}
+            <button
+              onClick={() => navigate("/dashboard/accounts")}
+              className={`w-full text-left px-4 py-2 rounded-lg transition ${
+                location.pathname.startsWith("/dashboard/accounts")
+                  ? "bg-white/20"
+                  : "hover:bg-white/10"
+              }`}
+            >
+              Accounts
+            </button>
 
-                <button
-                  className="btn btn-outline-light mb-3 text-start"
-                  onClick={() => navigate("/dashboard/accounts")}
-                >
-                  Accounts
-                </button>
+            {/* Reports */}
+            <button
+              onClick={() => navigate("/dashboard/reports")}
+              className={`w-full text-left px-4 py-2 rounded-lg transition ${
+                location.pathname.startsWith("/dashboard/reports")
+                  ? "bg-white/20"
+                  : "hover:bg-white/10"
+              }`}
+            >
+              Reports
+            </button>
 
-                <button 
-                  className="btn btn-outline-light text-start"
-                  onClick={() => navigate("/dashboard/reports")}
-                >
-                  Reports
-                </button>
-            </div>
-
-            {/* Main Content */}
-            <div className="flex-grow-1 d-flex flex-column">
-
-                {/* Navbar */}
-                <nav
-                  className="d-flex justify-content-between align-items-center px-4 py-3 shadow-sm"
-                  style={{
-                    background: "#ffffff",
-                    borderBottom:"1px solid #e5e7eb"
-                  }}
-                >
-                    <h5 className="fw-bold mb-0 text-dark">
-                        Banking Admin Dashboard
-                    </h5>
-
-                    <div>
-                        <button
-                          className="btn btn-outline-dark me-2"
-                          onClick={() => setDarkMode(!darkMode)}
-                        >
-                            {darkMode ? "Light Mode" : "Dark Mode"}
-                        </button>
-
-                        <button
-                          className="btn btn-danger"
-                          onClick={handleLogout}
-                        >
-                          Logout
-                        </button>
-                    </div>
-                </nav>
-
-                {/* Page Content */}
-                <div
-                  className="p-4"
-                  style={{
-                    background: darkMode ? "#111827" : "#f8f9fa",
-                    minHeight: "calc(100vh - 70px)"
-                  }}
-                >
-                    <div className="container-fluid">
-                        <div className="bg-white p-4 rounded-4 shadow-sm">
-                            <Outlet context={{darkMode}}/>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+          </div>
         </div>
-    );
+
+        <div className="text-sm text-gray-400">
+          © Banking App
+        </div>
+      </div>
+
+      {/* MAIN */}
+      <div className={`flex-1 flex flex-col ${darkMode ? "dark bg-gray-900 text-white" : "bg-gray-100"}`}>
+
+        {/* TOPBAR */}
+        <div className={`flex justify-between items-center px-6 py-4 shadow border-b ${
+          darkMode ? "bg-gray-800 border-gray-700" : "bg-white border-gray-200"
+        }`}>
+
+          <h1 className="text-lg font-semibold">
+            Banking Dashboard
+          </h1>
+
+          <div className="flex gap-3">
+
+            <button
+              onClick={() => setDarkMode(!darkMode)}
+              className={`px-4 py-1.5 rounded-lg border transition ${
+                darkMode
+                  ? "border-gray-600 hover:bg-gray-700"
+                  : "border-gray-300 hover:bg-gray-100"
+              }`}
+            >
+              {darkMode ? "Light Mode" : "Dark Mode"}
+            </button>
+
+            <button
+              onClick={handleLogout}
+              className="bg-red-500 hover:bg-red-600 text-white px-4 py-1.5 rounded-lg transition"
+            >
+              Logout
+            </button>
+
+          </div>
+        </div>
+
+        {/* CONTENT */}
+        <div className="flex-1 p-6">
+          <div className={`rounded-xl shadow p-6 ${
+            darkMode ? "bg-gray-800" : "bg-white"
+          }`}>
+            <Outlet context={{ darkMode }} />
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  );
 }
 
 export default Layout;
