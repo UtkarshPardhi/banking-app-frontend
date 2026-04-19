@@ -96,22 +96,31 @@ Architecture Patterns Used:
 
 ## 📸 Screenshots
 
-Login Page:
+### 🔐 Login
 ![Login](./screenshots/login.png)
 
-Dashboard:
+---
+
+### 📊 Dashboard
 ![Dashboard](./screenshots/dashboard.png)
 ![Dashboard](./screenshots/dashboard-2.png)
 
-Accounts Page:
+---
+
+### 🏦 Accounts
 ![Accounts](./screenshots/accounts.png)
 ![Accounts](./screenshots/accounts-2.png)
 
-Reports & Analytics:
+---
+
+### 📈 Reports & Analytics
 ![Reports](./screenshots/reports.png)
 ![Reports](./screenshots/reports-2.png)
 
 ---
+
+### 🌙 Dark Mode
+![Dark Mode](./screenshots/darkmode.png)
 
 ## 🔗 Backend Integration
 
