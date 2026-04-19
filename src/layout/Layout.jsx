@@ -85,46 +85,49 @@ function Layout() {
       }`}>
 
         {/* TOPBAR */}
-        <div className={`flex justify-between items-center px-6 py-4 shadow border-b ${
-          darkMode
-            ? "bg-gray-800 border-gray-700"
-            : "bg-gradient-to-r from-white to-gray-100 border-gray-200"
-        }`}>
+              <div
+                tabIndex={-1}
+                className={`flex justify-between items-center px-6 py-4 shadow border-b select-none ${
+                  darkMode
+                    ? "bg-gray-800 border-gray-700"
+                    : "bg-gradient-to-r from-white to-gray-100 border-gray-200"
+                }`}
+              >
 
-          <div className="flex items-center gap-2">
-          <img
-              src={logo}
-              alt="FinGo"
-              className={`h-10 object-contain pointer-events-none ${
-                darkMode
-                  ? "brightness-125 contrast-125 drop-shadow-[0_0_16px_rgba(34,211,238,1)]"
-                  : ""
-              }`}
-            />
-          </div>
+              <div className="flex items-center gap-2 select-none">
+                  <img
+                    src={logo}
+                    alt="FinGo"
+                    className={`h-10 object-contain pointer-events-none ${
+                      darkMode
+                        ? "brightness-125 contrast-125 drop-shadow-[0_0_16px_rgba(34,211,238,1)]"
+                        : ""
+                    }`}
+                  />
+              </div>
 
-          <div className="flex gap-3">
+                <div className="flex gap-3">
 
-            <button
-              onClick={() => setDarkMode(!darkMode)}
-              className={`px-4 py-1.5 rounded-lg border transition ${
-                darkMode
-                  ? "border-gray-600 hover:bg-gray-700"
-                  : "border-gray-300 hover:bg-gray-100"
-              }`}
-            >
-              {darkMode ? "Light Mode" : "Dark Mode"}
-            </button>
+                  <button
+                    onClick={() => setDarkMode(!darkMode)}
+                    className={`px-4 py-1.5 rounded-lg border transition focus:outline-none ${
+                      darkMode
+                        ? "border-gray-600 hover:bg-gray-700"
+                        : "border-gray-300 hover:bg-gray-100"
+                    }`}
+                  >
+                    {darkMode ? "Light Mode" : "Dark Mode"}
+                  </button>
 
-            <button
-              onClick={handleLogout}
-              className="bg-red-500 hover:bg-red-600 text-white px-4 py-1.5 rounded-lg transition"
-            >
-              Logout
-            </button>
+                  <button
+                    onClick={handleLogout}
+                    className="bg-red-500 hover:bg-red-600 text-white px-4 py-1.5 rounded-lg transition focus:outline-none"
+                  >
+                    Logout
+                  </button>
 
-          </div>
-        </div>
+                </div>
+              </div>
 
         {/* CONTENT */}
         <div className="flex-1 p-6">
