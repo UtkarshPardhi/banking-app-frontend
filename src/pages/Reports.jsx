@@ -292,7 +292,7 @@ const COLORS = ["#8b5cf6", "#94a3b8"];
                     <select
                         value={selectedAccountId}
                         onChange={(e) => setSelectedAccountId(e.target.value)}
-                        className="border px-3 py-2 rounded w-full md:w-64"
+                        className="border px-3 py-2 rounded w-full md:w-64 focus:outline-none"
                     >
                         <option value="">Select Account</option>
                         {accounts.map(acc => (
@@ -306,7 +306,7 @@ const COLORS = ["#8b5cf6", "#94a3b8"];
                     <select
                         value={filter}
                         onChange={(e) => setFilter(e.target.value)}
-                        className="border px-3 py-2 rounded"
+                        className="border px-3 py-2 rounded focus:outline-none"
                         >
                         <option value="">All</option>
                         <option value="7D">Last 7 Days</option>

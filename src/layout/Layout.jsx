@@ -2,10 +2,15 @@ import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { LayoutDashboard, Wallet, BarChart3 } from "lucide-react";
 import logo from "@/assets/logo.png";
+import { useEffect } from "react";
+
 
 function Layout() {
   const navigate = useNavigate();
   const location = useLocation();
+  useEffect(() => {
+  document.activeElement.blur();
+}, [location.pathname]);
   const [darkMode, setDarkMode] = useState(false);
 
   const handleLogout = () => {
@@ -130,7 +135,7 @@ function Layout() {
               </div>
 
         {/* CONTENT */}
-        <div className="flex-1 p-6">
+        <div className="flex-1 p-6 select-none">
           <div className={`rounded-xl shadow p-6 ${
             darkMode ? "bg-gray-800" : "bg-white"
           }`}>
